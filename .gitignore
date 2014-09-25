@@ -10,7 +10,7 @@
 hs_err_pid*
 
 ## Ignore project files created by NetBeans
-nbproject/
+nbproject/private/
 build/
 nbbuild/
 dist/
