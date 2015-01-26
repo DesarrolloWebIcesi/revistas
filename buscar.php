@@ -5,8 +5,8 @@
  */
 require('lib/pkp/includes/bootstrap.inc.php');
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 
 import('classes.search.ArticleSearch');
 import('classes.journal.Journal');
@@ -130,9 +130,9 @@ if ($detalles[3] <= 0) {
     echo "No hay resultados";
 }
 foreach ($resultados as $articulo) {
-    $titulo = htmlentities(utf8_decode($articulo['publishedArticle']->_data['title']['es_ES']));
-    $resumen = substr(strtolower(utf8_decode($articulo['publishedArticle']->_data['abstract']['es_ES'])), 0, 200) . "...";
-    $resumen = htmlentities(strtr($resumen, "ÀÈÌÒÙÁÉÍÓÚÇÑÄËÏÖÜ", "àèìòùáéíóúçñäëïöü"));
+    $titulo = $articulo['publishedArticle']->_data['title']['es_ES'];
+    $resumen = substr(mb_strtolower($articulo['publishedArticle']->_data['abstract']['es_ES']), 0, 200) . "...";
+    //$resumen = htmlentities(strtr($resumen, "ÀÈÌÒÙÁÉÍÓÚÇÑÄËÏÖÜ", "àèìòùáéíóúçñäëïöü"));
     $revista = $articulo['journal']->_data['path'];
     $edicion = $articulo['issue']->_data['id'];
     $id_envio = $articulo['publishedArticle']->_data['galleys'][0]->_data['submissionId'];
