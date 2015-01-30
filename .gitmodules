@@ -1,0 +1,3 @@
+[submodule "consulta_ejemplares"]
+	path = consulta_ejemplares
+	url = https://github.com/DesarrolloWebIcesi/consulta_ejemplares_ojs

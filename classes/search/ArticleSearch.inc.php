@@ -417,7 +417,7 @@ class ArticleSearch {
 			'ArticleSearch::retrieveResults',
 			array(&$journal, &$keywords, $publishedFrom, $publishedTo, $page, $itemsPerPage, &$totalResults, &$error)
 		);
-
+      
 		// If no search plug-in is activated then fall back to the
 		// default database search implementation.
 		if ($results === false) {

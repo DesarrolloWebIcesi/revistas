@@ -35,7 +35,26 @@ class PKPOAIMetadataFormat_DC extends OAIMetadataFormat {
 				} else {
 					$values = $dcDescription->getStatement($propertyName);
 				}
-				$response .= $this->formatElement($propertyName, $values, $property->getTranslated());
+                                /**
+                                 * damanzano
+                                 * Do something to split the subject en different dc:subject tags
+                                 */
+                                if($propertyName=='dc:subject'){
+                                    $newValues = array();
+                                    foreach($values as $key => $language){
+                                        $newSubjects="";
+                                        foreach ($language as $subjectString){
+                                            $newSubjects.=str_replace("; ", ";", $subjectString).";";
+                                        }
+                                        $newValues[$key]=array_merge_recursive(
+                                                    preg_split("~;~", $newSubjects, 0, PREG_SPLIT_NO_EMPTY));
+                                        
+                                    }
+                                    //print_r($newValues);
+                                    $response .= $this->formatElement($propertyName, $newValues, $property->getTranslated());
+                                }else{
+                                    $response .= $this->formatElement($propertyName, $values, $property->getTranslated());
+                                }
 			}
 		}
 
@@ -64,11 +83,13 @@ class PKPOAIMetadataFormat_DC extends OAIMetadataFormat {
 				$key = str_replace('_', '-', $key);
 				assert(is_array($value));
 				foreach ($value as $subValue) {
+                                    if($subValue!=""){
 					if ($key == METADATA_DESCRIPTION_UNKNOWN_LOCALE) {
 						$response .= "\t<$openingElement>" . OAIUtils::prepOutput($subValue) . "</$closingElement>\n";
 					} else {
 						$response .= "\t<$openingElement xml:lang=\"$key\">" . OAIUtils::prepOutput($subValue) . "</$closingElement>\n";
-					}
+                                        }
+                                    }
 				}
 			} else {
 				assert(is_scalar($value));
