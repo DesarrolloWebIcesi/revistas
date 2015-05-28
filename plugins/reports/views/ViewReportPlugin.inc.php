@@ -132,6 +132,12 @@ class ViewReportPlugin extends ReportPlugin {
 				foreach ($galleysResult as $galleyRecord) {
 					$galleyId = $galleyRecord[STATISTICS_DIMENSION_ASSOC_ID];
 					$galley =& $galleyDao->getGalley($galleyId);
+                                        /*
+                                         * Autor: Christian David Criollo
+                                         * Fecha: 28 de Mayo 2015
+                                         * Descripción: Se adiciono fix para que se genere el reporte si el articulo no tiene una galerada
+                                         */
+                                        if (!$galley) continue;
 					$label = $galley->getGalleyLabel();
 					$i = array_search($label, $galleyLabels);
 					if ($i === false) {
